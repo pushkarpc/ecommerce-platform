@@ -16,6 +16,7 @@ import { UpdateTaskDto } from './dto/update-task.dto.js';
 import { CreateTaskDto } from './dto/create-task.dto.js';
 import { TasksDto } from './dto/tasks.dto.js';
 import { ApiResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { FindtaskQueryDto } from './dto/find-tasks-query.dto.js';
 
 @ApiTags('tasks')
 @Controller('tasks')
@@ -25,23 +26,15 @@ export class TasksController {
   @Get()
   @ApiOperation({ summary: 'List, filter, search, sort, and paginate tasks' })
   @ApiResponse({ status: 200, description: 'Tasks retrieved successfully.' })
-  findAll(
-    @Query('completed') completed?: string,
-    @Query('search') search?: string,
-    @Query('sortBy') sortBy?: string,
-    @Query('order') order?: string,
-    @Query('page') page?: string,
-    @Query('limit') limit?: string,
-  ): Promise<TasksDto[]> {
-    const pageNumber = Math.max(1, Number.parseInt(page ?? '1', 10) || 1);
-    const pageSize = Math.min(100, Number.parseInt(limit ?? '5', 10) || 5);
+  @ApiResponse({ status: 400, description: 'Invalid query parameters.' })
+  findAll(@Query() query: FindtaskQueryDto): Promise<TasksDto[]> {
     return this.taskService.findAll(
-      completed,
-      search,
-      sortBy,
-      order,
-      pageNumber,
-      pageSize,
+      query.completed,
+      query.search,
+      query.sortBy,
+      query.order,
+      query.page ?? 1,
+      query.limit ?? 5,
     );
   }
 
@@ -64,10 +57,7 @@ export class TasksController {
   @Patch(':id')
   @ApiOperation({ summary: 'update existing task property' })
   @ApiResponse({ status: 200, description: 'Tasks retrieved successfully.' })
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updateData: UpdateTaskDto,
-  ) {
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateData: UpdateTaskDto) {
     return this.taskService.update(id, updateData);
   }
 

@@ -38,7 +38,7 @@ export class TasksService {
     sortBy?: string,
     order?: string,
     page: number = 1,
-    limit: number = 2,
+    limit: number = 5,
   ): Promise<TasksDto[]> {
     let result = [...this.tasks];
     //filter by completion status
@@ -55,8 +55,7 @@ export class TasksService {
 
       result = result.filter(
         (item) =>
-          item.title.toLowerCase().includes(searchTerm) ||
-          (item.description ?? '').toLowerCase().includes(searchTerm),
+          item.title.toLowerCase().includes(searchTerm) || (item.description ?? '').toLowerCase().includes(searchTerm),
       );
     }
 
@@ -86,7 +85,6 @@ export class TasksService {
       description: taskData.description ?? '',
       completed: taskData.completed ?? false,
     };
-
     this.tasks.push(newTask);
     await this.redisService.setTasks(this.tasks);
 
