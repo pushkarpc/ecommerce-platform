@@ -1,14 +1,6 @@
-import { Type } from 'class-transformer';
-import {
-  IsInt,
-  IsOptional,
-  IsIn,
-  IsString,
-  MaxLength,
-  Max,
-  Min,
-} from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import { IsIn, IsInt, IsOptional, IsString, Max, MaxLength, Min } from 'class-validator';
 
 export class FindtaskQueryDto {
   @ApiPropertyOptional({ enum: ['true', 'false'] })
