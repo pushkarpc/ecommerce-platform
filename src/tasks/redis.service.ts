@@ -1,7 +1,7 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { TasksDto } from './dto/tasks.dto.js';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Redis } from '@upstash/redis';
+import { TasksDto } from './dto/tasks.dto.js';
 
 @Injectable()
 export class RedisService {
