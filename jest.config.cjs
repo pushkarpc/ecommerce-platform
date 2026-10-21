@@ -1,4 +1,5 @@
 module.exports = {
+  transformIgnorePatterns: ['node_modules/(?!@nestjs/)'],
   testEnvironment: 'node',
   roots: ['<rootDir>/src', '<rootDir>/test'],
   testRegex: '.*\\.spec\\.ts$',
