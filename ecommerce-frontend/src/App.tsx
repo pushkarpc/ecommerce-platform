@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ProductCard } from './components/ProductCard';
 import { mockProducts } from './mock-products';
 import { addToCart, clearCart } from './store/cartSlice';
-import type { RootState } from './store/store';
+import type { AppDispatch, RootState } from './store/store';
 
 export default function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   // Read reactive state directly from the global Redux Store
   const cartItems = useSelector((state: RootState) => state.cart.items);

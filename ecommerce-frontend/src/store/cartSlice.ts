@@ -31,7 +31,7 @@ export const cartSlice = createSlice({
       state.totalAmount = state.items.reduce((total, item) => total + item.price * item.quantity, 0);
     },
 
-    // Action 2: Remove or decrement an item count entirely
+    // Action 2: Remove an item entirely
     removeFromCart: (state, action: PayloadAction<number>) => {
       state.items = state.items.filter((item) => item.id !== action.payload);
       state.totalAmount = state.items.reduce((total, item) => total + item.price * item.quantity, 0);
