@@ -1,5 +1,5 @@
 import React from 'react';
-import type { ProductCardProps } from './product-card-props.types';
+import type { ProductCardProps } from './product.types';
 
 export const ProductCard: React.FC<ProductCardProps> = ({ title, description, price, stock, onAddToCart }) => {
   return (

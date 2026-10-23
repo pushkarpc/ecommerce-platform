@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto.js';
 import { UpdateProductDto } from './dto/update-product.dto.js';
 import { Product } from './entities/product.entity.js';
+import { GetProductsResponse } from './product.types.js';
 
 @Injectable()
 export class ProductsService {
@@ -54,7 +55,7 @@ export class ProductsService {
     // 6.Execute query - GetManyAndCount  returns both the raw items array and total count
     const [items, total] = await queryBuilder.getManyAndCount();
 
-    return {
+    const getProductsResponse: GetProductsResponse = {
       data: items,
       meta: {
         totalItems: total,
@@ -64,6 +65,7 @@ export class ProductsService {
         currentPage: page,
       },
     };
+    return getProductsResponse;
   }
 
   async findProductById(id: number) {

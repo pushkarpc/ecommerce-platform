@@ -1,7 +1,6 @@
-import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useGetProductsQuery } from './api/productApiSlice';
 import { ProductCard } from './components/ProductCard';
-import { mockProducts } from './mock-products';
 import { addToCart, clearCart } from './store/cartSlice';
 import type { AppDispatch, RootState } from './store/store';
 
@@ -12,28 +11,20 @@ export default function App() {
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const totalAmount = useSelector((state: RootState) => state.cart.totalAmount);
 
-  // Calculate total number of items in the cart array
   const totalItemsCount = cartItems.reduce((count, item) => count + item.quantity, 0);
 
-  const [products, setProducts] = useState(mockProducts);
+  const { data: products, error, isLoading } = useGetProductsQuery();
+
+  if (isLoading) return <div>Loading products...</div>;
+  if (error) return <div>Error loading products...</div>;
+  if (!products) return <div>Product catalog is empty.</div>;
 
   const handlePurchaseClick = (productId: number, title: string, price: number) => {
     dispatch(addToCart({ id: productId, title, price }));
-
-    setProducts((currentProducts) =>
-      currentProducts.map((product) => {
-        if (product.id === productId && product.stock > 0) {
-          return { ...product, stock: product.stock - 1 };
-        }
-        return product;
-      }),
-    );
   };
 
   const handleClearCartAndResetStock = () => {
     dispatch(clearCart());
-
-    setProducts(mockProducts);
   };
 
   return (
@@ -68,9 +59,10 @@ export default function App() {
       {/* Main Catalog View Space */}
       <div className="max-w-6xl mx-auto p-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((product) => (
+          {products.data.map((product) => (
             <ProductCard
               key={product.id} // Unique tracking identifier key required by React
+              id={product.id}
               title={product.title}
               description={product.description}
               price={product.price}
