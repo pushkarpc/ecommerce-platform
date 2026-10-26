@@ -21,10 +21,10 @@ export class ProductsService {
     search?: string,
     minPrice?: number,
     maxPrice?: number,
-    sortBy?: string,
-    sortOrder?: 'ASC' | 'DESC',
+    sortBy: string = 'createdAt',
+    sortOrder: 'ASC' | 'DESC' = 'DESC',
     page: number = 1,
-    limit: number = 10,
+    limit: number = 5,
   ) {
     // 1. Initializing QueryBuilder with an alias 'product
     const queryBuilder = this.productRepository.createQueryBuilder('product');
@@ -47,6 +47,7 @@ export class ProductsService {
 
     // 4. Sorting
     queryBuilder.orderBy(`product.${sortBy}`, sortOrder);
+    queryBuilder.addOrderBy('product.id', 'ASC');
 
     // 5. Pagination (calculate offset or skip)
     const skip = (page - 1) * limit;
