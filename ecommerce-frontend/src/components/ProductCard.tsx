@@ -24,7 +24,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ title, description, pr
 
         <button
           onClick={onAddToCart}
-          disabled={stock === 0}
+          disabled={stock <= 0}
           className="w-full bg-slate-900 hover:bg-slate-800 text-white font-medium py-2 px-4 rounded-md transition disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed"
         >
           Add to Cart
