@@ -1,4 +1,5 @@
 import type { GetProductsResponse, Product } from '../components/product.types';
+import type { GetProductsQueryParams } from '../query-params/get-products-query.types';
 import { apiSlice } from './apiSlice';
 
 type ApiProduct = Omit<Product, 'price'> & { price: number | string };
@@ -11,8 +12,8 @@ const normalizeProduct = ({ price, ...product }: ApiProduct): Product => ({
 
 export const productApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getProducts: builder.query<GetProductsResponse, void>({
-      query: () => '/products', // Matches NestJS @Get('products') path
+    getProducts: builder.query<GetProductsResponse, GetProductsQueryParams | void>({
+      query: (param) => ({ url: '/products', params: param ?? undefined }), // Matches NestJS @Get('products') path
       transformResponse: (response: ApiGetProductsResponse): GetProductsResponse => ({
         ...response,
         data: response.data.map(normalizeProduct),

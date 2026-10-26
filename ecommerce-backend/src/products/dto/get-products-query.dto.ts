@@ -36,5 +36,5 @@ export class GetProductsQueryDto {
   @Type(() => Number)
   @IsNumber()
   @Min(1)
-  limit?: number = 10;
+  limit?: number = 5;
 }
