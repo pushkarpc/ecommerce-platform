@@ -1,5 +1,5 @@
 import type { GetProductsResponse, Product } from '../components/product.types';
-import type { GetProductsQueryParams } from '../query-params/get-products-query.types';
+import type { GetProductsQueryParams } from '../query-body/get-products-query.types';
 import { apiSlice } from './apiSlice';
 
 type ApiProduct = Omit<Product, 'price'> & { price: number | string };

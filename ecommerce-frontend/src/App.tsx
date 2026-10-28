@@ -3,7 +3,7 @@ import { useGetProductsQuery } from './api/productApiSlice';
 import { ProductCard } from './components/ProductCard';
 import { SearchFilters } from './components/SearchFilters';
 import { DEFAULT_SEARCH_FILTERS } from './constants/constant-values';
-import type { GetProductsQueryParams } from './query-params/get-products-query.types';
+import type { GetProductsQueryParams } from './query-body/get-products-query.types';
 import { addToCart, clearCart } from './store/cartSlice';
 import { onChangeSearchFilter, onClickNextPage, onClickPreviousPage } from './store/searchFilterSlice';
 import type { AppDispatch, RootState } from './store/store';
@@ -29,6 +29,7 @@ export default function App() {
         </span>
       </div>
     );
+
   if (error) return <div className="flex items-center justify-center h-screen">Error loading products...</div>;
   if (!products) return <div className="flex items-center justify-center h-screen">Product catalog is empty.</div>;
 

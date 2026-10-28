@@ -1,4 +1,4 @@
-import type { GetProductsQueryParams } from '../query-params/get-products-query.types';
+import type { GetProductsQueryParams } from '../query-body/get-products-query.types';
 
 export interface SearchFilterProps {
   currentPage: number;

@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import type { GetProductsQueryParams } from '../query-params/get-products-query.types';
+import type { GetProductsQueryParams } from '../query-body/get-products-query.types';
 import { onChangeOrder, onChangeSorting } from '../store/searchFilterSlice';
 import type { SearchFilterProps } from './search.types';
 

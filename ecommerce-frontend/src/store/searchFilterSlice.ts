@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { DEFAULT_SEARCH_FILTERS } from '../constants/constant-values';
-import type { GetProductsQueryParams } from '../query-params/get-products-query.types';
+import type { GetProductsQueryParams } from '../query-body/get-products-query.types';
 
 const initialState: GetProductsQueryParams = DEFAULT_SEARCH_FILTERS;
 
