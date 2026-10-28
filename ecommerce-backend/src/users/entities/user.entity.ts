@@ -1,6 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany } from 'typeorm';
-import { Order } from '../../orders/entities/order.entity.js';
 import type { Relation } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Order } from '../../orders/entities/order.entity.js';
 
 @Entity('users') // Defines PostgreSQL table name
 export class User {
@@ -20,4 +20,10 @@ export class User {
   // 'order => order.user' maps the inverse side of the relationship.
   @OneToMany(() => Order, (order) => order.user, { cascade: true })
   orders: Relation<Order[]>;
+
+  @Column({ type: 'varchar', nullable: true })
+  otpCode: string | null;
+
+  @Column({ type: 'timestamp', nullable: true })
+  otpExpired: Date | null;
 }
