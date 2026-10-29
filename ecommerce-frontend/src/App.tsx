@@ -7,6 +7,8 @@ import type { GetProductsQueryParams } from './query-body/get-products-query.typ
 import { addToCart, clearCart } from './store/cartSlice';
 import { onChangeSearchFilter, onClickNextPage, onClickPreviousPage } from './store/searchFilterSlice';
 import type { AppDispatch, RootState } from './store/store';
+import { LoginComponent } from './components/LoginComponent';
+import { useState } from 'react';
 
 export default function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -16,7 +18,9 @@ export default function App() {
   const totalAmount = useSelector((state: RootState) => state.cart.totalAmount);
   const totalItemsCount = cartItems.reduce((count, item) => count + item.quantity, 0);
   const { data: products, error, isLoading, isFetching } = useGetProductsQuery(searchFilters);
-
+  const [isLoggedIn, setLoggedIn] = useState(false);
+  if (isLoggedIn) {
+  }
   if (isLoading)
     return (
       <div className="flex items-center justify-center h-screen">
@@ -97,6 +101,9 @@ export default function App() {
             );
           })}
         </div>
+      </div>
+      <div>
+        <LoginComponent />
       </div>
     </div>
   );
