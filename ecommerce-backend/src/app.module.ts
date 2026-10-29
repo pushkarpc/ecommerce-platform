@@ -1,13 +1,15 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
-import { TasksModule } from './tasks/tasks.module.js';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from './users/users.module.js';
-import { ProductsModule } from './products/products.module.js';
+import { AuthModule } from './authentication/auth.module.js';
+import { MailModule } from './mailer.module.js';
 import { OrdersModule } from './orders/orders.module.js';
-import { AuthModule } from './auth.module.js';
+import { ProductsModule } from './products/products.module.js';
+import { TasksModule } from './tasks/tasks.module.js';
+import { UsersModule } from './users/users.module.js';
 
 @Module({
   imports: [
@@ -19,11 +21,6 @@ import { AuthModule } from './auth.module.js';
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         url: configService.get<string>('DATABASE_URL'),
-        // host: configService.get<string>('DB_Host', 'localhost'),
-        // port: configService.get<number>('DB_PORT', 5432),
-        // username: configService.get<string>('DB_USERNAME', 'postgres'),
-        // password: configService.get<string>('DB_PASSWORD', 'postgres'),
-        // database: configService.get<string>('DB_NAME', 'ecommerce_db'),
         ssl: {
           rejectUnauthorized: false,
         },
@@ -31,6 +28,8 @@ import { AuthModule } from './auth.module.js';
         synchronize: false, // STOPS accidental data drops in production; we use migrations instead!
       }),
     }),
+
+    MailModule,
     UsersModule,
     ProductsModule,
     OrdersModule,
